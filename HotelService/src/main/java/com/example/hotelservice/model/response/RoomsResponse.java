@@ -1,0 +1,26 @@
+package com.example.hotelservice.model.response;
+
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+
+@Getter
+@Setter
+@Builder
+public class RoomsResponse {
+
+    private Long id;
+    private String roomNumber;
+    private Integer capacity;
+    private BigDecimal pricePerNight;
+    private Hotel hotel;
+
+    @Getter
+    @Setter
+    public static class Hotel {
+        private Long id;
+        private String name;
+    }
+}
