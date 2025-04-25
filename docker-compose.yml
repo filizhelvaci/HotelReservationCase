@@ -1,0 +1,24 @@
+services:
+  hotel-service-db:
+    extends:
+      service: hotel-service-db
+      file: ./HotelService/docker-compose.yml
+
+  user-service-db:
+    extends:
+      service: user-service-db
+      file: ./UserService/docker-compose.yml
+
+  hotel-service:
+    extends:
+      service: hotel-service
+      file: ./HotelService/docker-compose.yml
+
+  user-service:
+    extends:
+      service: user-service
+      file: ./UserService/docker-compose.yml
+
+networks:
+  hotel_network:
+    driver: bridge
