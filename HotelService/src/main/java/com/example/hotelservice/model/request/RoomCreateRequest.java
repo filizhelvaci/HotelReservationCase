@@ -1,7 +1,10 @@
 package com.example.hotelservice.model.request;
 
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,8 +19,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class RoomCreateRequest {
 
-    @NotNull
-    @Range(min = 1, max = 10000)
+    @NotBlank
+    @Size(min = 1, max = 8)
+    @Pattern(regexp = "^[0-9]+$", message = "Oda numarası sadece rakamlardan oluşmalıdır.")
     private String roomNumber;
 
     @NotNull
@@ -28,8 +32,8 @@ public class RoomCreateRequest {
     @Range(min = 0, max = 10_000_000)
     private BigDecimal pricePerNight;
 
-    @NotEmpty
-    @Range(min = 0)
+    @NotNull
+    @Min(1)
     private Long hotelId;
 
 }
