@@ -39,7 +39,7 @@ public class Hotel {
     private String address;
 
     @Column(name = "star_rating")
-    private int starRating;
+    private Integer starRating;
 
     @Column(name = "create_at")
     private LocalDateTime createdAt;
