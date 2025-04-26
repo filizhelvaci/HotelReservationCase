@@ -62,7 +62,7 @@ class RoomServiceImpl implements RoomService {
     @Override
     public void create(RoomCreateRequest roomCreateRequest) {
 
-        boolean existsByNumber = roomRepository.existsByNumber(roomCreateRequest.getRoomNumber());
+        boolean existsByNumber = roomRepository.existsByRoomNumber(roomCreateRequest.getRoomNumber());
         if (existsByNumber) {
             throw new RoomAlreadyExistsException(roomCreateRequest.getRoomNumber());
         }
