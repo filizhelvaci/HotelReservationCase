@@ -1,0 +1,23 @@
+server:
+  port: 8092
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${DATABASE_IP:localhost}:${DATABASE_PORT:5453}/hotel_reservation_case
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:4321}
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+      ddl-auto: update
+    open-in-view: false
+    show-sql: true
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
