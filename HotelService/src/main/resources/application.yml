@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://hotel-service-db:5443/hotel_r_case
-    username: postgres
-    password: 4321
+    url: jdbc:postgresql://${DATABASE_IP:localhost}:${DATABASE_PORT:5443}/hotel_r_case
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:4321}
   jpa:
     properties:
       hibernate:
@@ -16,6 +16,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
       ddl-auto: update
     open-in-view: false
+    show-sql: true
 logging:
   level:
     org.hibernate.SQL: DEBUG

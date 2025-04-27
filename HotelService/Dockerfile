@@ -4,16 +4,16 @@ WORKDIR /app
 
 COPY build.gradle .
 COPY settings.gradle .
-COPY RoomService/build.gradle ./RoomService/
-COPY RoomService/src ./RoomService/src
+COPY HotelService/build.gradle ./HotelService/
+COPY HotelService/src ./HotelService/src
 
-RUN gradle RoomService:build
+RUN gradle HotelService:build -x test
 
 FROM amazoncorretto:17.0.12-al2023
 
 WORKDIR /app
 
-COPY --from=build /app/RoomService/build/libs/*.jar hotel_r_case.jar
+COPY --from=build /app/HotelService/build/libs/*.jar hotel_r_case.jar
 
 EXPOSE 8092
 
