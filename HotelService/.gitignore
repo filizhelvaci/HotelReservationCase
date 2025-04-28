@@ -4,6 +4,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 docker
+src/main/generated/
 
 ### STS ###
 .apt_generated
