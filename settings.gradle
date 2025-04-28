@@ -1,1 +1,3 @@
 rootProject.name = 'HotelReservationCase'
+include 'HotelService'
+include 'ReservationService'
