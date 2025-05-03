@@ -5,10 +5,12 @@ import com.example.exception.ReservationNotFoundException;
 import com.example.model.entity.Reservation;
 import com.example.model.mapper.ReservationCreateRequestToEntityMapper;
 import com.example.model.mapper.ReservationToResponseMapper;
+import com.example.model.mapper.ReservationToResponsesMapper;
 import com.example.model.mapper.ReservationUpdateRequestToEntityMapper;
 import com.example.model.request.ReservationCreateRequest;
 import com.example.model.request.ReservationUpdateRequest;
 import com.example.model.response.ReservationResponse;
+import com.example.model.response.ReservationsResponse;
 import com.example.repository.ReservationRepository;
 import com.example.service.ReservationService;
 import jakarta.transaction.Transactional;
@@ -18,14 +20,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
-    private final ReservationToResponseMapper reservationToResponseMapper;
 
-    private final ReservationCreateRequestToEntityMapper reservationCreateRequestToEntityMapper = ReservationCreateRequestToEntityMapper.INSTANCE;
-    private final ReservationUpdateRequestToEntityMapper reservationUpdateRequestToEntityMapper = ReservationUpdateRequestToEntityMapper.INSTANCE;
+    private final ReservationToResponseMapper reservationToResponseMapper;
+    private final ReservationCreateRequestToEntityMapper reservationCreateRequestToEntityMapper;
+    private final ReservationUpdateRequestToEntityMapper reservationUpdateRequestToEntityMapper;
+    private final ReservationToResponsesMapper reservationToResponsesMapper;
 
     @Override
     public ReservationResponse findById(Long id) {
@@ -36,11 +40,13 @@ class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findAll() {
-        return reservationRepository.findAll();
+    public List<ReservationsResponse> findAll() {
+
+        List<Reservation> reservations=reservationRepository.findAll();
+        return reservationToResponsesMapper.map(reservations);
     }
 
-    @Transactional
+    @Override
     public void create(ReservationCreateRequest reservationCreateRequest) {
 
         List<Reservation> conflictingReservations = reservationRepository.findConflictingReservations(
@@ -56,7 +62,7 @@ class ReservationServiceImpl implements ReservationService {
         reservationRepository.save(reservation);
     }
 
-    @Transactional
+    @Override
     public void update(Long id, ReservationUpdateRequest reservationUpdateRequest) {
 
         Reservation reservation = reservationRepository.findById(id)
