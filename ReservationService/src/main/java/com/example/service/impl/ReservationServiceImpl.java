@@ -26,10 +26,10 @@ class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
 
-    private final ReservationToResponseMapper reservationToResponseMapper;
-    private final ReservationCreateRequestToEntityMapper reservationCreateRequestToEntityMapper;
-    private final ReservationUpdateRequestToEntityMapper reservationUpdateRequestToEntityMapper;
-    private final ReservationToResponsesMapper reservationToResponsesMapper;
+    private final ReservationToResponseMapper reservationToResponseMapper= ReservationToResponseMapper.INSTANCE;
+    private final ReservationCreateRequestToEntityMapper reservationCreateRequestToEntityMapper= ReservationCreateRequestToEntityMapper.INSTANCE;
+    private final ReservationUpdateRequestToEntityMapper reservationUpdateRequestToEntityMapper= ReservationUpdateRequestToEntityMapper.INSTANCE;
+    private final ReservationToResponsesMapper reservationToResponsesMapper=ReservationToResponsesMapper.INSTANCE;
 
     @Override
     public ReservationResponse findById(Long id) {
