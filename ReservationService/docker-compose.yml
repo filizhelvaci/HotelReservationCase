@@ -13,7 +13,7 @@ services:
       - "5453:5432"
     networks:
       - hotel_network
-  hotel-service:
+  reservation-service:
     build:
       context: ..
       dockerfile: ReservationService/Dockerfile
