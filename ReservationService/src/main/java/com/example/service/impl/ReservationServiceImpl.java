@@ -26,10 +26,10 @@ class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
 
-    private final ReservationToResponseMapper reservationToResponseMapper= ReservationToResponseMapper.INSTANCE;
-    private final ReservationCreateRequestToEntityMapper reservationCreateRequestToEntityMapper= ReservationCreateRequestToEntityMapper.INSTANCE;
-    private final ReservationUpdateRequestToEntityMapper reservationUpdateRequestToEntityMapper= ReservationUpdateRequestToEntityMapper.INSTANCE;
-    private final ReservationToResponsesMapper reservationToResponsesMapper=ReservationToResponsesMapper.INSTANCE;
+    private final ReservationToResponseMapper reservationToResponseMapper = ReservationToResponseMapper.INSTANCE;
+    private final ReservationCreateRequestToEntityMapper reservationCreateRequestToEntityMapper = ReservationCreateRequestToEntityMapper.INSTANCE;
+    private final ReservationUpdateRequestToEntityMapper reservationUpdateRequestToEntityMapper = ReservationUpdateRequestToEntityMapper.INSTANCE;
+    private final ReservationToResponsesMapper reservationToResponsesMapper = ReservationToResponsesMapper.INSTANCE;
 
     @Override
     public ReservationResponse findById(Long id) {
@@ -42,7 +42,7 @@ class ReservationServiceImpl implements ReservationService {
     @Override
     public List<ReservationsResponse> findAll() {
 
-        List<Reservation> reservations=reservationRepository.findAll();
+        List<Reservation> reservations = reservationRepository.findAll();
         return reservationToResponsesMapper.map(reservations);
     }
 
@@ -54,7 +54,10 @@ class ReservationServiceImpl implements ReservationService {
         );
 
         if (!conflictingReservations.isEmpty()) {
-            throw new ReservationAlreadyExistsException(reservationCreateRequest.getRoomId().toString());
+            throw new ReservationAlreadyExistsException(
+                    reservationCreateRequest.getRoomId().toString(),
+                    reservationCreateRequest.getCheckInDate(),
+                    reservationCreateRequest.getCheckOutDate());
         }
 
         Reservation reservation = reservationCreateRequestToEntityMapper.map(reservationCreateRequest);
@@ -74,10 +77,13 @@ class ReservationServiceImpl implements ReservationService {
         conflictingReservations.removeIf(reservations -> reservations.getId().equals(reservation.getId()));
 
         if (!conflictingReservations.isEmpty()) {
-            throw new ReservationAlreadyExistsException(reservationUpdateRequest.getRoomId().toString());
+            throw new ReservationAlreadyExistsException(reservationUpdateRequest.getRoomId().toString(),
+                    reservationUpdateRequest.getCheckInDate(),
+                    reservationUpdateRequest.getCheckOutDate());
         }
 
         Reservation reservationUpdate = reservationUpdateRequestToEntityMapper.map(reservationUpdateRequest);
+        reservationUpdate.setId(id);
 
         reservationRepository.save(reservationUpdate);
     }
