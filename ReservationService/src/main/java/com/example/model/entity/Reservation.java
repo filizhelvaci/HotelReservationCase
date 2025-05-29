@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "room")
+@Table(name = "reservation")
 public class Reservation {
 
         @Id
@@ -44,7 +44,7 @@ public class Reservation {
         @Column(name = "check_out_date")
         private LocalDate checkOutDate;
 
-        @Column(name = "check_out_date")
+        @Column(name = "created_at")
         private LocalDateTime createdAt;
 
 }

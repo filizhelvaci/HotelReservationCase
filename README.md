@@ -38,3 +38,38 @@ _*Version Control*_
 
 _*APIs Interaction Platform*_
 * _Postman_
+
+## Postman
+ [Workspace](https://www.postman.com/filizkh/workspace/case-hotel-reservation)
+
+## Running All Components as Container on Docker
+
+The following command can be executed to stand up the application and database on Docker. Then the application can be run and proceed.
+
+`docker compose up -d --build`
+
+The following command can be used to remove Docker Containers.
+
+`docker compose down -v`
+
+## Running PostgreSQL Container on Docker
+
+The following command can be executed to stand up the database on Docker. Then the application can be run and proceed.
+
+### For Hotel Service:
+
+`docker compose up -d --build hotel-service-db`
+
+### For Reservation Service:
+
+`docker compose up -d --build reservation-service-db`
+
+## Running Application Container on Docker
+
+### For Hotel Service:
+
+`docker compose up -d --build hotel-service`
+
+### For Reservation Service:
+
+`docker compose up -d --build reservation-service`
